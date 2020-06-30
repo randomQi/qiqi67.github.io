@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -475,106 +475,94 @@
 <h3 id="Ubuntu系统"><a href="#Ubuntu系统" class="headerlink" title="Ubuntu系统"></a>Ubuntu系统</h3><ul>
 <li>卸载旧版本的<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ apt remove docker docker-engine docker.io</span><br><span class="line">$ rm -rf /var/lib/docker/</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ apt remove docker docker-engine docker.io
+$ <span class="token function">rm</span> -rf /var/lib/docker/</code></pre>
 <ul>
 <li>在<code>Ubuntu-14.04</code>上需要安装<code>AUFS</code>包，以支持<code>aufs</code>存储驱动:</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install -y linux-image-extra-$(uname -r) linux-image-extra-virtual</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ apt <span class="token function">install</span> -y linux-image-extra-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> -r<span class="token variable">)</span></span> linux-image-extra-virtual</code></pre>
 <ul>
 <li><p>在<code>Ubuntu-16.04</code>及以后<code>Docker-CE</code>默认使用<code>overlay2</code>作为存储驱动，无需安装；</p>
 </li>
 <li><p>安装基础软件包：</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install -y apt-transport-https ca-certificates curl</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ apt <span class="token function">install</span> -y apt-transport-https ca-certificates curl</code></pre>
 <ul>
 <li>添加<code>Docker</code>的官方<code>GPG</code>密钥：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="token operator">|</span> <span class="token function">sudo</span> apt-key add -</code></pre>
 <ul>
 <li>添加<code>Docker-CE</code>存储库(官网)：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ add-apt-repository <span class="token string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu <span class="token variable"><span class="token variable">$(</span>lsb_release -cs<span class="token variable">)</span></span> stable"</span></code></pre>
 <ul>
 <li>添加<code>Docker-CE</code>存储库(国内)：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ add-apt-repository <span class="token string">"deb [arch=amd64] http://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu <span class="token variable"><span class="token variable">$(</span>lsb_release -cs<span class="token variable">)</span></span> stable"</span></code></pre>
 <ul>
 <li>更新软件包的索引列表：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ apt update</code></pre>
 <h3 id="CentOS系统"><a href="#CentOS系统" class="headerlink" title="CentOS系统"></a>CentOS系统</h3><ul>
 <li>卸载旧版本的<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum remove docker docker-common container-selinux docker-selinux docker-engine</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ yum remove docker docker-common container-selinux docker-selinux docker-engine</code></pre>
 <ul>
 <li>安装<code>yum-utils</code>，它提供<code>yum-config-manager</code>实用程序：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install -y yum-utils</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ yum <span class="token function">install</span> -y yum-utils</code></pre>
 <ul>
 <li>添加<code>Docker-CE</code>存储库(官网)：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</code></pre>
 <ul>
 <li>添加<code>Docker-CE</code>存储库(国内)：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum-config-manager --add-repo https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ yum-config-manager --add-repo https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</code></pre>
 <ul>
 <li>更新软件包的索引列表：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum makecache fast</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ yum makecache fast</code></pre>
 <h2 id="安装Docker服务"><a href="#安装Docker服务" class="headerlink" title="安装Docker服务"></a>安装Docker服务</h2><h3 id="Ubuntu系统-1"><a href="#Ubuntu系统-1" class="headerlink" title="Ubuntu系统"></a>Ubuntu系统</h3><ul>
 <li>安装最新版的<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install -y docker-ce</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ apt <span class="token function">install</span> -y docker-ce</code></pre>
 <ul>
 <li>启动<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu-14</span></span><br><span class="line">$ service start docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu-16</span></span><br><span class="line">$ systemctl start docker</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># Ubuntu-14</span>
+$ <span class="token function">service</span> start docker
 
+<span class="token comment" spellcheck="true"># Ubuntu-16</span>
+$ systemctl start docker</code></pre>
 <ul>
 <li>卸载<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ apt purge docker-ce</span><br><span class="line">$ rm -rf /var/lib/docker</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ apt purge docker-ce
+$ <span class="token function">rm</span> -rf /var/lib/docker</code></pre>
 <h3 id="CentOS系统-1"><a href="#CentOS系统-1" class="headerlink" title="CentOS系统"></a>CentOS系统</h3><ul>
 <li>安装最新版的<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install -y docker-ce</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ yum <span class="token function">install</span> -y docker-ce</code></pre>
 <ul>
 <li>启动<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl start docker</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ systemctl start docker</code></pre>
 <ul>
 <li>使<code>Docker</code>服务随机自启：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ systemctl <span class="token function">enable</span> docker</code></pre>
 <ul>
 <li>卸载<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ yum remove -y docker-ce</span><br><span class="line">$ rm -rf /var/lib/docker</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ yum remove -y docker-ce
+$ <span class="token function">rm</span> -rf /var/lib/docker</code></pre>
 <h3 id="CentOS-Ubuntu系统"><a href="#CentOS-Ubuntu系统" class="headerlink" title="CentOS/Ubuntu系统"></a>CentOS/Ubuntu系统</h3><ul>
 <li>查看<code>Docker</code>的版本信息：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker -v</span><br><span class="line">$ docker version</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ docker -v
+$ docker version</code></pre>
 <h2 id="配置Docker加速器"><a href="#配置Docker加速器" class="headerlink" title="配置Docker加速器"></a>配置Docker加速器</h2><ul>
 <li><p>由于众所周知的原因(墙)，从<code>Docker Hub</code>难以高效地下载镜像，除了使用<code>VPN</code>或代理之外，最为有效的方式就是使用<code>Docker</code>国内镜像；</p>
 </li>
@@ -587,20 +575,23 @@
 <li><p>配置私人加速器：</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://6bdc63e3.m.daocloud.io</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh <span class="token operator">|</span> sh -s http://6bdc63e3.m.daocloud.io</code></pre>
 <ul>
 <li>配置文件：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/docker</span><br><span class="line">$ vim /etc/docker/daemon.json</span><br></pre></td></tr></tbody></table></figure>
-
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    "registry-mirrors": ["https://9cs90h5l.mirror.aliyuncs.com"]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">mkdir</span> -p /etc/docker
+$ vim /etc/docker/daemon.json</code></pre>
+<pre class=" language-text"><code class="language-text">{
+    "registry-mirrors": ["https://9cs90h5l.mirror.aliyuncs.com"]
+}</code></pre>
 <ul>
 <li>重启<code>Docker</code>服务：</li>
 </ul>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu-14</span></span><br><span class="line">$ service docker restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu-16/CentOS-7</span></span><br><span class="line">$ systemctl restart docker</span><br></pre></td></tr></tbody></table></figure>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># Ubuntu-14</span>
+$ <span class="token function">service</span> docker restart
 
+<span class="token comment" spellcheck="true"># Ubuntu-16/CentOS-7</span>
+$ systemctl restart docker</code></pre>
 <hr>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -635,7 +626,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">John Doe</a>
+                    <a href="/about" rel="external nofollow noreferrer">小奇</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -645,7 +636,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://qiqi67.github.io/2020/06/30/Docker(%E4%B8%80)%E4%B9%8B%E5%AE%89%E8%A3%85Docker/">https://qiqi67.github.io/2020/06/30/Docker(%E4%B8%80)%E4%B9%8B%E5%AE%89%E8%A3%85Docker/</a>
+                    <a href="https://qiqi67.github.io/2020/06/30/docker-yi-zhi-an-zhuang-docker/">https://qiqi67.github.io/2020/06/30/docker-yi-zhi-an-zhuang-docker/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -658,7 +649,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">John Doe</a>
+                    <a href="/about" target="_blank">小奇</a>
                     !
                 </span>
             </div>
@@ -853,7 +844,7 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2020/06/30/Docker(%E4%B8%80)%E4%B9%8B%E5%AE%89%E8%A3%85Docker/">
+                <a href="/2020/06/30/docker-yi-zhi-an-zhuang-docker/">
                     <div class="card-image">
                         
                         
@@ -883,7 +874,7 @@ Ubuntu-14.04_x64(LTS)：T
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            小奇
                             
                         </span>
                     </div>
@@ -921,7 +912,7 @@ Ubuntu-14.04_x64(LTS)：T
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            小奇
                             
                         </span>
                     </div>
@@ -1123,7 +1114,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
-            <a href="/about" target="_blank">John Doe</a>
+            <a href="/about" target="_blank">小奇</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
@@ -1156,7 +1147,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:1781373476@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -1165,10 +1156,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 

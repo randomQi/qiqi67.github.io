@@ -29,7 +29,7 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -487,7 +487,7 @@
 <p>为什么选择Docker?</p>
 <p>（1）上手快。</p>
 <p>​    用户只需要几分钟，就可以把自己的程序“Docker化”。Docker依赖于“写时复制”（copy-on-write）模型，使修改应用程序也非常迅速，可以说达到“随心所致，代码即改”的境界。    </p>
-<pre><code>随后，就可以创建容器来运行应用程序了。大多数Docker容器只需要不到1秒中即可启动。由于去除了管理程序的开销，Docker容器拥有很高的性能，同时同一台宿主机中也可以运行更多的容器，使用户尽可能的充分利用系统资源。</code></pre><p>（2）职责的逻辑分类</p>
+<pre><code>     随后，就可以创建容器来运行应用程序了。大多数Docker容器只需要不到1秒中即可启动。由于去除了管理程序的开销，Docker容器拥有很高的性能，同时同一台宿主机中也可以运行更多的容器，使用户尽可能的充分利用系统资源。</code></pre><p>（2）职责的逻辑分类</p>
 <p>​    使用Docker，开发人员只需要关心容器中运行的应用程序，而运维人员只需要关心如何管理容器。Docker设计的目的就是要加强开发人员写代码的开发环境与应用程序要部署的生产环境一致性。从而降低那种“开发时一切正常，肯定是运维的问题（测试环境都是正常的，上线后出了问题就归结为肯定是运维的问题）”</p>
 <p>（3）快速高效的开发生命周期</p>
 <p>​    Docker的目标之一就是缩短代码从开发、测试到部署、上线运行的周期，让你的应用程序具备可移植性，易于构建，并易于协作。（通俗一点说，Docker就像一个盒子，里面可以装很多物件，如果需要这些物件的可以直接将该大盒子拿走，而不需要从该盒子中一件件的取。）</p>
@@ -509,99 +509,53 @@
 <p>​    一些列标准操作；</p>
 <p>​    一个执行环境。</p>
 <p>​    Docker借鉴了标准集装箱的概念。标准集装箱将货物运往世界各地，Docker将这个模型运用到自己的设计中，唯一不同的是：集装箱运输货物，而Docker运输软件。</p>
-<pre><code>和集装箱一样，Docker在执行上述操作时，并不关心容器中到底装了什么，它不管是web服务器，还是数据库，或者是应用程序服务器什么的。所有的容器都按照相同的方式将内容“装载”进去。
+<pre><code>     和集装箱一样，Docker在执行上述操作时，并不关心容器中到底装了什么，它不管是web服务器，还是数据库，或者是应用程序服务器什么的。所有的容器都按照相同的方式将内容“装载”进去。
 
-Docker也不关心你要把容器运到何方：我们可以在自己的笔记本中构建容器，上传到Registry，然后下载到一个物理的或者虚拟的服务器来测试，在把容器部署到具体的主机中。像标准集装箱一样，Docker容器方便替换，可以叠加，易于分发，并且尽量通用。</code></pre><h3 id="1-4-3-Registry（注册中心）"><a href="#1-4-3-Registry（注册中心）" class="headerlink" title="1.4.3 Registry（注册中心）"></a>1.4.3 Registry（注册中心）</h3><p>​    Docker用Registry来保存用户构建的镜像。Registry分为公共和私有两种。Docker公司运营公共的Registry叫做Docker Hub。用户可以在Docker Hub注册账号，分享并保存自己的镜像（说明：在Docker Hub下载镜像巨慢，可以自己构建私有的Registry）。</p>
+     Docker也不关心你要把容器运到何方：我们可以在自己的笔记本中构建容器，上传到Registry，然后下载到一个物理的或者虚拟的服务器来测试，在把容器部署到具体的主机中。像标准集装箱一样，Docker容器方便替换，可以叠加，易于分发，并且尽量通用。</code></pre><h3 id="1-4-3-Registry（注册中心）"><a href="#1-4-3-Registry（注册中心）" class="headerlink" title="1.4.3 Registry（注册中心）"></a>1.4.3 Registry（注册中心）</h3><p>​    Docker用Registry来保存用户构建的镜像。Registry分为公共和私有两种。Docker公司运营公共的Registry叫做Docker Hub。用户可以在Docker Hub注册账号，分享并保存自己的镜像（说明：在Docker Hub下载镜像巨慢，可以自己构建私有的Registry）。</p>
 <p>​    <a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com/</a></p>
 <h1 id="2-Docker安装与启动"><a href="#2-Docker安装与启动" class="headerlink" title="2 Docker安装与启动"></a>2 Docker安装与启动</h1><h2 id="2-1-安装Docker"><a href="#2-1-安装Docker" class="headerlink" title="2.1 安装Docker"></a>2.1 安装Docker</h2><p>​    Docker官方建议在Ubuntu中安装，因为Docker是基于Ubuntu发布的，而且一般Docker出现的问题Ubuntu是最先更新或者打补丁的。在很多版本的CentOS中是不支持更新最新的一些补丁包的。</p>
 <p>​    由于我们学习的环境都使用的是CentOS，因此这里我们将Docker安装到CentOS上。注意：这里建议安装在CentOS7.x以上的版本，在CentOS6.x的版本中，安装前需要安装其他很多的环境而且Docker很多补丁不支持更新。</p>
 <p>​    请直接挂载课程配套的Centos7.x镜像    </p>
 <p>（1）yum 包更新到最新</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（3）设置yum源为阿里云</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（4）安装docker</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install docker-ce</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（5）安装后查看docker版本</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -v</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="2-2-设置ustc的镜像"><a href="#2-2-设置ustc的镜像" class="headerlink" title="2.2 设置ustc的镜像"></a>2.2 设置ustc的镜像</h2><p>ustc是老牌的linux镜像服务提供者了，还在遥远的ubuntu 5.04版本的时候就在用。ustc的docker镜像加速器速度很快。ustc docker mirror的优势之一就是不需要注册，是真正的公共服务。</p>
+<pre><code>sudo yum update</code></pre><p>（2）安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的</p>
+<pre><code>sudo yum install -y yum-utils device-mapper-persistent-data lvm2</code></pre><p>（3）设置yum源为阿里云</p>
+<pre><code>sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</code></pre><p>（4）安装docker</p>
+<pre><code>sudo yum install docker-ce</code></pre><p>（5）安装后查看docker版本</p>
+<pre><code>docker -v</code></pre><h2 id="2-2-设置ustc的镜像"><a href="#2-2-设置ustc的镜像" class="headerlink" title="2.2 设置ustc的镜像"></a>2.2 设置ustc的镜像</h2><p>ustc是老牌的linux镜像服务提供者了，还在遥远的ubuntu 5.04版本的时候就在用。ustc的docker镜像加速器速度很快。ustc docker mirror的优势之一就是不需要注册，是真正的公共服务。</p>
 <p><a href="https://lug.ustc.edu.cn/wiki/mirrors/help/docker" target="_blank" rel="noopener">https://lug.ustc.edu.cn/wiki/mirrors/help/docker</a></p>
 <p>编辑该文件：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/docker/daemon.json</span><br></pre></td></tr></tbody></table></figure>
-
-<p>在该文件中输入如下内容：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="2-3-Docker的启动与停止"><a href="#2-3-Docker的启动与停止" class="headerlink" title="2.3 Docker的启动与停止"></a>2.3 Docker的启动与停止</h2><p><strong>systemctl</strong>命令是系统服务管理器指令</p>
+<pre><code>vi /etc/docker/daemon.json  </code></pre><p>在该文件中输入如下内容：</p>
+<pre><code>{
+"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn"]
+}</code></pre><h2 id="2-3-Docker的启动与停止"><a href="#2-3-Docker的启动与停止" class="headerlink" title="2.3 Docker的启动与停止"></a>2.3 Docker的启动与停止</h2><p><strong>systemctl</strong>命令是系统服务管理器指令</p>
 <p>启动docker：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start&nbsp;docker</span><br></pre></td></tr></tbody></table></figure>
-
-<p>停止docker：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop&nbsp;docker</span><br></pre></td></tr></tbody></table></figure>
-
-<p>重启docker：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart&nbsp;docker</span><br></pre></td></tr></tbody></table></figure>
-
-<p>查看docker状态：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status&nbsp;docker</span><br></pre></td></tr></tbody></table></figure>
-
-<p>开机启动：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable docker</span><br></pre></td></tr></tbody></table></figure>
-
-<p>查看docker概要信息</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info</span><br></pre></td></tr></tbody></table></figure>
-
-<p>查看docker帮助文档</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker --help</span><br></pre></td></tr></tbody></table></figure>
-
-<h1 id="3-常用命令"><a href="#3-常用命令" class="headerlink" title="3 常用命令"></a>3 常用命令</h1><h2 id="3-1-镜像相关命令"><a href="#3-1-镜像相关命令" class="headerlink" title="3.1 镜像相关命令"></a>3.1 镜像相关命令</h2><h3 id="3-1-1-查看镜像"><a href="#3-1-1-查看镜像" class="headerlink" title="3.1.1 查看镜像"></a>3.1.1 查看镜像</h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></tbody></table></figure>
-
-<p>REPOSITORY：镜像名称</p>
+<pre><code>systemctl start docker</code></pre><p>停止docker：</p>
+<pre><code>systemctl stop docker</code></pre><p>重启docker：</p>
+<pre><code>systemctl restart docker</code></pre><p>查看docker状态：</p>
+<pre><code>systemctl status docker</code></pre><p>开机启动：</p>
+<pre><code>systemctl enable docker</code></pre><p>查看docker概要信息</p>
+<pre><code>docker info</code></pre><p>查看docker帮助文档</p>
+<pre><code>docker --help</code></pre><h1 id="3-常用命令"><a href="#3-常用命令" class="headerlink" title="3 常用命令"></a>3 常用命令</h1><h2 id="3-1-镜像相关命令"><a href="#3-1-镜像相关命令" class="headerlink" title="3.1 镜像相关命令"></a>3.1 镜像相关命令</h2><h3 id="3-1-1-查看镜像"><a href="#3-1-1-查看镜像" class="headerlink" title="3.1.1 查看镜像"></a>3.1.1 查看镜像</h3><pre><code>docker images</code></pre><p>REPOSITORY：镜像名称</p>
 <p>TAG：镜像标签</p>
 <p>IMAGE ID：镜像ID</p>
 <p>CREATED：镜像的创建日期（不是获取该镜像的日期）</p>
 <p>SIZE：镜像大小</p>
 <p>这些镜像都是存储在Docker宿主机的/var/lib/docker目录下</p>
 <h3 id="3-1-2-搜索镜像"><a href="#3-1-2-搜索镜像" class="headerlink" title="3.1.2 搜索镜像"></a>3.1.2 搜索镜像</h3><p>如果你需要从网络中查找需要的镜像，可以通过以下命令搜索</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search 镜像名称</span><br></pre></td></tr></tbody></table></figure>
-
-<p>NAME：仓库名称</p>
+<pre><code>docker search 镜像名称</code></pre><p>NAME：仓库名称</p>
 <p>DESCRIPTION：镜像描述</p>
 <p>STARS：用户评价，反应一个镜像的受欢迎程度</p>
 <p>OFFICIAL：是否官方</p>
 <p>AUTOMATED：自动构建，表示该镜像由Docker Hub自动构建流程创建的</p>
 <h3 id="3-1-3-拉取镜像"><a href="#3-1-3-拉取镜像" class="headerlink" title="3.1.3 拉取镜像"></a>3.1.3 拉取镜像</h3><p>拉取镜像就是从中央仓库中下载镜像到本地</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull 镜像名称</span><br></pre></td></tr></tbody></table></figure>
-
-<p>例如，我要下载centos7镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull centos:7</span><br></pre></td></tr></tbody></table></figure>
-
-<h3 id="3-1-4-删除镜像"><a href="#3-1-4-删除镜像" class="headerlink" title="3.1.4 删除镜像"></a>3.1.4 删除镜像</h3><p>按镜像ID删除镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi 镜像ID</span><br></pre></td></tr></tbody></table></figure>
-
-<p>删除所有镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi `docker images -q`</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="3-2-容器相关命令"><a href="#3-2-容器相关命令" class="headerlink" title="3.2 容器相关命令"></a>3.2 容器相关命令</h2><h3 id="3-2-1-查看容器"><a href="#3-2-1-查看容器" class="headerlink" title="3.2.1 查看容器"></a>3.2.1 查看容器</h3><p>查看正在运行的容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></tbody></table></figure>
-
-<p>查看所有容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps –a</span><br></pre></td></tr></tbody></table></figure>
-
-<p>查看最后一次运行的容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps –l</span><br></pre></td></tr></tbody></table></figure>
-
-<p>查看停止的容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -f status=exited</span><br></pre></td></tr></tbody></table></figure>
-
-<h3 id="3-2-2-创建与启动容器"><a href="#3-2-2-创建与启动容器" class="headerlink" title="3.2.2 创建与启动容器"></a>3.2.2 创建与启动容器</h3><p>创建容器常用的参数说明：</p>
+<pre><code>docker pull 镜像名称</code></pre><p>例如，我要下载centos7镜像</p>
+<pre><code>docker pull centos:7</code></pre><h3 id="3-1-4-删除镜像"><a href="#3-1-4-删除镜像" class="headerlink" title="3.1.4 删除镜像"></a>3.1.4 删除镜像</h3><p>按镜像ID删除镜像</p>
+<pre><code>docker rmi 镜像ID</code></pre><p>删除所有镜像</p>
+<pre><code>docker rmi `docker images -q`</code></pre><h2 id="3-2-容器相关命令"><a href="#3-2-容器相关命令" class="headerlink" title="3.2 容器相关命令"></a>3.2 容器相关命令</h2><h3 id="3-2-1-查看容器"><a href="#3-2-1-查看容器" class="headerlink" title="3.2.1 查看容器"></a>3.2.1 查看容器</h3><p>查看正在运行的容器</p>
+<pre><code>docker ps</code></pre><p>查看所有容器</p>
+<pre><code>docker ps –a</code></pre><p>查看最后一次运行的容器</p>
+<pre><code>docker ps –l</code></pre><p>查看停止的容器</p>
+<pre><code>docker ps -f status=exited</code></pre><h3 id="3-2-2-创建与启动容器"><a href="#3-2-2-创建与启动容器" class="headerlink" title="3.2.2 创建与启动容器"></a>3.2.2 创建与启动容器</h3><p>创建容器常用的参数说明：</p>
 <p>创建容器命令：docker run</p>
 <p> -i：表示运行容器</p>
 <p> -t：表示容器启动后会进入其命令行。加入这两个参数后，容器创建就能登录进去。即分配一个伪终端。</p>
@@ -610,83 +564,38 @@ Docker也不关心你要把容器运到何方：我们可以在自己的笔记�
 <p> -d：在run后面加上-d参数,则会创建一个守护式容器在后台运行（这样创建容器后不会自动登录容器，如果只加-i -t两个参数，创建后就会自动进去容器）。</p>
 <p> -p：表示端口映射，前者是宿主机端口，后者是容器内的映射端口。可以使用多个-p做多个端口映射</p>
 <p>（1）交互式方式创建容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name=容器名称 镜像名称:标签 /bin/bash</span><br></pre></td></tr></tbody></table></figure>
-
-<p>这时我们通过ps命令查看，发现可以看到启动的容器，状态为启动状态  </p>
+<pre><code>docker run -it --name=容器名称 镜像名称:标签 /bin/bash</code></pre><p>这时我们通过ps命令查看，发现可以看到启动的容器，状态为启动状态  </p>
 <p>退出当前容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exit</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）守护式方式创建容器：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -di --name=容器名称 镜像名称:标签</span><br></pre></td></tr></tbody></table></figure>
-
-<p>登录守护式容器方式：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 容器名称 (或者容器ID)  /bin/bash</span><br></pre></td></tr></tbody></table></figure>
-
-<h3 id="3-2-3-停止与启动容器"><a href="#3-2-3-停止与启动容器" class="headerlink" title="3.2.3 停止与启动容器"></a>3.2.3 停止与启动容器</h3><p>停止容器：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop 容器名称（或者容器ID）</span><br></pre></td></tr></tbody></table></figure>
-
-<p>启动容器：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start 容器名称（或者容器ID）</span><br></pre></td></tr></tbody></table></figure>
-
-<h3 id="3-2-4-文件拷贝"><a href="#3-2-4-文件拷贝" class="headerlink" title="3.2.4 文件拷贝"></a>3.2.4 文件拷贝</h3><p>如果我们需要将文件拷贝到容器内可以使用cp命令</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 需要拷贝的文件或目录 容器名称:容器目录</span><br></pre></td></tr></tbody></table></figure>
-
-<p>也可以将文件从容器内拷贝出来</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp 容器名称:容器目录 需要拷贝的文件或目录</span><br></pre></td></tr></tbody></table></figure>
-
-<h3 id="3-2-5-目录挂载"><a href="#3-2-5-目录挂载" class="headerlink" title="3.2.5 目录挂载"></a>3.2.5 目录挂载</h3><p>我们可以在创建容器的时候，将宿主机的目录与容器内的目录进行映射，这样我们就可以通过修改宿主机某个目录的文件从而去影响容器。<br>创建容器 添加-v参数 后边为   宿主机目录:容器目录，例如：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -di -v /usr/local/myhtml:/usr/local/myhtml --name=mycentos3 centos:7</span><br></pre></td></tr></tbody></table></figure>
-
-<p>如果你共享的是多级的目录，可能会出现权限不足的提示。</p>
+<pre><code>exit</code></pre><p>（2）守护式方式创建容器：</p>
+<pre><code>docker run -di --name=容器名称 镜像名称:标签</code></pre><p>登录守护式容器方式：</p>
+<pre><code>docker exec -it 容器名称 (或者容器ID)  /bin/bash</code></pre><h3 id="3-2-3-停止与启动容器"><a href="#3-2-3-停止与启动容器" class="headerlink" title="3.2.3 停止与启动容器"></a>3.2.3 停止与启动容器</h3><p>停止容器：</p>
+<pre><code>docker stop 容器名称（或者容器ID）</code></pre><p>启动容器：</p>
+<pre><code>docker start 容器名称（或者容器ID）</code></pre><h3 id="3-2-4-文件拷贝"><a href="#3-2-4-文件拷贝" class="headerlink" title="3.2.4 文件拷贝"></a>3.2.4 文件拷贝</h3><p>如果我们需要将文件拷贝到容器内可以使用cp命令</p>
+<pre><code>docker cp 需要拷贝的文件或目录 容器名称:容器目录</code></pre><p>也可以将文件从容器内拷贝出来</p>
+<pre><code>docker cp 容器名称:容器目录 需要拷贝的文件或目录</code></pre><h3 id="3-2-5-目录挂载"><a href="#3-2-5-目录挂载" class="headerlink" title="3.2.5 目录挂载"></a>3.2.5 目录挂载</h3><p>我们可以在创建容器的时候，将宿主机的目录与容器内的目录进行映射，这样我们就可以通过修改宿主机某个目录的文件从而去影响容器。<br>创建容器 添加-v参数 后边为   宿主机目录:容器目录，例如：</p>
+<pre><code>docker run -di -v /usr/local/myhtml:/usr/local/myhtml --name=mycentos3 centos:7</code></pre><p>如果你共享的是多级的目录，可能会出现权限不足的提示。</p>
 <p>这是因为CentOS7中的安全模块selinux把权限禁掉了，我们需要添加参数  –privileged=true  来解决挂载的目录没有权限的问题</p>
 <h3 id="3-2-6-查看容器IP地址"><a href="#3-2-6-查看容器IP地址" class="headerlink" title="3.2.6 查看容器IP地址"></a>3.2.6 查看容器IP地址</h3><p>我们可以通过以下命令查看容器运行的各种数据</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect 容器名称（容器ID）</span><br></pre></td></tr></tbody></table></figure>
-
-<p>也可以直接执行下面的命令直接输出IP地址</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format='{{.NetworkSettings.IPAddress}}' 容器名称（容器ID）</span><br></pre></td></tr></tbody></table></figure>
-
-<h3 id="3-2-7-删除容器"><a href="#3-2-7-删除容器" class="headerlink" title="3.2.7 删除容器"></a>3.2.7 删除容器</h3><p>删除指定的容器：</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm 容器名称（容器ID）</span><br></pre></td></tr></tbody></table></figure>
-
-<h1 id="4-应用部署"><a href="#4-应用部署" class="headerlink" title="4 应用部署"></a>4 应用部署</h1><h2 id="4-1-MySQL部署"><a href="#4-1-MySQL部署" class="headerlink" title="4.1 MySQL部署"></a>4.1 MySQL部署</h2><p>（1）拉取mysql镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull centos/mysql-57-centos7</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）创建容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -di --name=tensquare_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql</span><br></pre></td></tr></tbody></table></figure>
-
-<p>-p 代表端口映射，格式为  宿主机映射端口:容器运行端口</p>
+<pre><code>docker inspect 容器名称（容器ID） </code></pre><p>也可以直接执行下面的命令直接输出IP地址</p>
+<pre><code>docker inspect --format='{{.NetworkSettings.IPAddress}}' 容器名称（容器ID）</code></pre><h3 id="3-2-7-删除容器"><a href="#3-2-7-删除容器" class="headerlink" title="3.2.7 删除容器"></a>3.2.7 删除容器</h3><p>删除指定的容器：</p>
+<pre><code>docker rm 容器名称（容器ID）</code></pre><h1 id="4-应用部署"><a href="#4-应用部署" class="headerlink" title="4 应用部署"></a>4 应用部署</h1><h2 id="4-1-MySQL部署"><a href="#4-1-MySQL部署" class="headerlink" title="4.1 MySQL部署"></a>4.1 MySQL部署</h2><p>（1）拉取mysql镜像</p>
+<pre><code>docker pull centos/mysql-57-centos7</code></pre><p>（2）创建容器</p>
+<pre><code>docker run -di --name=tensquare_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql</code></pre><p>-p 代表端口映射，格式为  宿主机映射端口:容器运行端口</p>
 <p>-e 代表添加环境变量  MYSQL_ROOT_PASSWORD  是root用户的登陆密码</p>
 <p>（3）远程登录mysql</p>
 <p>连接宿主机的IP  ,指定端口为33306 </p>
 <h2 id="4-2-tomcat部署"><a href="#4-2-tomcat部署" class="headerlink" title="4.2 tomcat部署"></a>4.2 tomcat部署</h2><p>（1）拉取镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull tomcat:7-jre7</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）创建容器</p>
+<pre><code>docker pull tomcat:7-jre7</code></pre><p>（2）创建容器</p>
 <p>创建容器  -p表示地址映射</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -di --name=mytomcat -p 9000:8080 </span><br><span class="line">-v /usr/local/webapps:/usr/local/tomcat/webapps tomcat:7-jre7</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="4-3-Nginx部署"><a href="#4-3-Nginx部署" class="headerlink" title="4.3 Nginx部署"></a>4.3 Nginx部署</h2><p>（1）拉取镜像    </p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）创建Nginx容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -di --name=mynginx -p 80:80 nginx</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="4-4-Redis部署"><a href="#4-4-Redis部署" class="headerlink" title="4.4 Redis部署"></a>4.4 Redis部署</h2><p>（1）拉取镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）创建容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -di --name=myredis -p 6379:6379 redis</span><br></pre></td></tr></tbody></table></figure>
-
-<h1 id="5-迁移与备份"><a href="#5-迁移与备份" class="headerlink" title="5 迁移与备份"></a>5 迁移与备份</h1><h2 id="5-1-容器保存为镜像"><a href="#5-1-容器保存为镜像" class="headerlink" title="5.1 容器保存为镜像"></a>5.1 容器保存为镜像</h2><p>我们可以通过以下命令将容器保存为镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit mynginx mynginx_i</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="5-2-镜像备份"><a href="#5-2-镜像备份" class="headerlink" title="5.2 镜像备份"></a>5.2 镜像备份</h2><p>我们可以通过以下命令将镜像保存为tar 文件</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  save -o mynginx.tar mynginx_i</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="5-3-镜像恢复与迁移"><a href="#5-3-镜像恢复与迁移" class="headerlink" title="5.3 镜像恢复与迁移"></a>5.3 镜像恢复与迁移</h2><p>首先我们先删除掉mynginx_img镜像  然后执行此命令进行恢复</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load -i mynginx.tar</span><br></pre></td></tr></tbody></table></figure>
-
-<p>-i 输入的文件</p>
+<pre><code>docker run -di --name=mytomcat -p 9000:8080 
+-v /usr/local/webapps:/usr/local/tomcat/webapps tomcat:7-jre7</code></pre><h2 id="4-3-Nginx部署"><a href="#4-3-Nginx部署" class="headerlink" title="4.3 Nginx部署"></a>4.3 Nginx部署</h2><p>（1）拉取镜像    </p>
+<pre><code>docker pull nginx</code></pre><p>（2）创建Nginx容器</p>
+<pre><code>docker run -di --name=mynginx -p 80:80 nginx</code></pre><h2 id="4-4-Redis部署"><a href="#4-4-Redis部署" class="headerlink" title="4.4 Redis部署"></a>4.4 Redis部署</h2><p>（1）拉取镜像</p>
+<pre><code>docker pull redis</code></pre><p>（2）创建容器</p>
+<pre><code>docker run -di --name=myredis -p 6379:6379 redis</code></pre><h1 id="5-迁移与备份"><a href="#5-迁移与备份" class="headerlink" title="5 迁移与备份"></a>5 迁移与备份</h1><h2 id="5-1-容器保存为镜像"><a href="#5-1-容器保存为镜像" class="headerlink" title="5.1 容器保存为镜像"></a>5.1 容器保存为镜像</h2><p>我们可以通过以下命令将容器保存为镜像</p>
+<pre><code>docker commit mynginx mynginx_i</code></pre><h2 id="5-2-镜像备份"><a href="#5-2-镜像备份" class="headerlink" title="5.2 镜像备份"></a>5.2 镜像备份</h2><p>我们可以通过以下命令将镜像保存为tar 文件</p>
+<pre><code>docker  save -o mynginx.tar mynginx_i</code></pre><h2 id="5-3-镜像恢复与迁移"><a href="#5-3-镜像恢复与迁移" class="headerlink" title="5.3 镜像恢复与迁移"></a>5.3 镜像恢复与迁移</h2><p>首先我们先删除掉mynginx_img镜像  然后执行此命令进行恢复</p>
+<pre><code>docker load -i mynginx.tar</code></pre><p>-i 输入的文件</p>
 <p>执行后再次查看镜像，可以看到镜像已经恢复</p>
 <h1 id="6-Dockerfile"><a href="#6-Dockerfile" class="headerlink" title="6 Dockerfile"></a>6 Dockerfile</h1><h2 id="6-1-什么是Dockerfile"><a href="#6-1-什么是Dockerfile" class="headerlink" title="6.1 什么是Dockerfile"></a>6.1 什么是Dockerfile</h2><p>Dockerfile是由一系列命令和参数构成的脚本，这些命令应用于基础镜像并最终创建一个新的镜像。</p>
 <p>1、对于开发人员：可以为开发团队提供一个完全一致的开发环境；<br>2、对于测试人员：可以直接拿开发时所构建的镜像或者通过Dockerfile文件构建一个新的镜像开始工作了；<br>3、对于运维人员：在部署时，可以实现应用的无缝移植。</p>
@@ -728,48 +637,37 @@ Docker也不关心你要把容器运到何方：我们可以在自己的笔记�
 </tbody></table>
 <h2 id="6-3-使用脚本创建镜像"><a href="#6-3-使用脚本创建镜像" class="headerlink" title="6.3 使用脚本创建镜像"></a>6.3 使用脚本创建镜像</h2><p>步骤：</p>
 <p>（1）创建目录</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir –p /usr/local/dockerjdk8</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）下载jdk-8u171-linux-x64.tar.gz并上传到服务器（虚拟机）中的/usr/local/dockerjdk8目录</p>
+<pre><code>mkdir –p /usr/local/dockerjdk8</code></pre><p>（2）下载jdk-8u171-linux-x64.tar.gz并上传到服务器（虚拟机）中的/usr/local/dockerjdk8目录</p>
 <p>（3）创建文件Dockerfile  <code>vi Dockerfile</code></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#依赖镜像名称和ID</span><br><span class="line">FROM centos:7</span><br><span class="line">#指定镜像创建者信息</span><br><span class="line">MAINTAINER ITCAST</span><br><span class="line">#切换工作目录</span><br><span class="line">WORKDIR /usr</span><br><span class="line">RUN mkdir  /usr/local/java</span><br><span class="line">#ADD 是相对路径jar,把java添加到容器中</span><br><span class="line">ADD jdk-8u171-linux-x64.tar.gz /usr/local/java/</span><br><span class="line"></span><br><span class="line">#配置java环境变量</span><br><span class="line">ENV JAVA_HOME /usr/local/java/jdk1.8.0_171</span><br><span class="line">ENV JRE_HOME $JAVA_HOME/jre</span><br><span class="line">ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH</span><br><span class="line">ENV PATH $JAVA_HOME/bin:$PATH</span><br></pre></td></tr></tbody></table></figure>
+<pre><code>#依赖镜像名称和ID
+FROM centos:7
+#指定镜像创建者信息
+MAINTAINER ITCAST
+#切换工作目录
+WORKDIR /usr
+RUN mkdir  /usr/local/java
+#ADD 是相对路径jar,把java添加到容器中
+ADD jdk-8u171-linux-x64.tar.gz /usr/local/java/
 
-<p>（4）执行命令构建镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t='jdk1.8' .</span><br></pre></td></tr></tbody></table></figure>
-
-<p>注意后边的空格和点，不要省略</p>
+#配置java环境变量
+ENV JAVA_HOME /usr/local/java/jdk1.8.0_171
+ENV JRE_HOME $JAVA_HOME/jre
+ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib:$CLASSPATH
+ENV PATH $JAVA_HOME/bin:$PATH</code></pre><p>（4）执行命令构建镜像</p>
+<pre><code>docker build -t='jdk1.8' .</code></pre><p>注意后边的空格和点，不要省略</p>
 <p>（5）查看镜像是否建立完成</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></tbody></table></figure>
-
-
-
-<h1 id="7-Docker私有仓库"><a href="#7-Docker私有仓库" class="headerlink" title="7 Docker私有仓库"></a>7 Docker私有仓库</h1><h2 id="7-1-私有仓库搭建与配置"><a href="#7-1-私有仓库搭建与配置" class="headerlink" title="7.1 私有仓库搭建与配置"></a>7.1 私有仓库搭建与配置</h2><p>（1）拉取私有仓库镜像（此步省略）</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull registry</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）启动私有仓库容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -di --name=registry -p 5000:5000 registry</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（3）打开浏览器 输入地址<a href="http://192.168.184.141:5000/v2/_catalog看到`{&quot;repositories&quot;:[]}`" target="_blank" rel="noopener">http://192.168.184.141:5000/v2/_catalog看到`{"repositories":[]}`</a> 表示私有仓库搭建成功并且内容为空</p>
+<pre><code>docker images</code></pre><h1 id="7-Docker私有仓库"><a href="#7-Docker私有仓库" class="headerlink" title="7 Docker私有仓库"></a>7 Docker私有仓库</h1><h2 id="7-1-私有仓库搭建与配置"><a href="#7-1-私有仓库搭建与配置" class="headerlink" title="7.1 私有仓库搭建与配置"></a>7.1 私有仓库搭建与配置</h2><p>（1）拉取私有仓库镜像（此步省略）</p>
+<pre><code>docker pull registry</code></pre><p>（2）启动私有仓库容器</p>
+<pre><code>docker run -di --name=registry -p 5000:5000 registry</code></pre><p>（3）打开浏览器 输入地址<a href="http://192.168.184.141:5000/v2/_catalog看到`{&quot;repositories&quot;:[]}`" target="_blank" rel="noopener">http://192.168.184.141:5000/v2/_catalog看到`{"repositories":[]}`</a> 表示私有仓库搭建成功并且内容为空</p>
 <p>（4）修改daemon.json</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/docker/daemon.json</span><br></pre></td></tr></tbody></table></figure>
-
-<p>添加以下内容，保存退出。</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{<span class="attr">"insecure-registries"</span>:[<span class="string">"192.168.184.141:5000"</span>]}</span><br></pre></td></tr></tbody></table></figure>
-
+<pre><code>vi /etc/docker/daemon.json</code></pre><p>添加以下内容，保存退出。</p>
+<pre class=" language-json"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"insecure-registries"</span><span class="token operator">:</span><span class="token punctuation">[</span><span class="token string">"192.168.184.141:5000"</span><span class="token punctuation">]</span><span class="token punctuation">}</span> </code></pre>
 <p>此步用于让 docker信任私有仓库地址</p>
 <p>（5）重启docker 服务</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br></pre></td></tr></tbody></table></figure>
-
-<h2 id="7-2-镜像上传至私有仓库"><a href="#7-2-镜像上传至私有仓库" class="headerlink" title="7.2 镜像上传至私有仓库"></a>7.2 镜像上传至私有仓库</h2><p>（1）标记此镜像为私有仓库的镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag jdk1.8 192.168.184.141:5000/jdk1.8</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（2）再次启动私服容器</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start registry</span><br></pre></td></tr></tbody></table></figure>
-
-<p>（3）上传标记的镜像</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push 192.168.184.141:5000/jdk1.8</span><br></pre></td></tr></tbody></table></figure>
-
-<script>
+<pre><code>systemctl restart docker</code></pre><h2 id="7-2-镜像上传至私有仓库"><a href="#7-2-镜像上传至私有仓库" class="headerlink" title="7.2 镜像上传至私有仓库"></a>7.2 镜像上传至私有仓库</h2><p>（1）标记此镜像为私有仓库的镜像</p>
+<pre><code>docker tag jdk1.8 192.168.184.141:5000/jdk1.8</code></pre><p>（2）再次启动私服容器</p>
+<pre><code>docker start registry</code></pre><p>（3）上传标记的镜像</p>
+<pre><code>docker push 192.168.184.141:5000/jdk1.8</code></pre><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -802,7 +700,7 @@ Docker也不关心你要把容器运到何方：我们可以在自己的笔记�
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">John Doe</a>
+                    <a href="/about" rel="external nofollow noreferrer">小奇</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -825,7 +723,7 @@ Docker也不关心你要把容器运到何方：我们可以在自己的笔记�
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">John Doe</a>
+                    <a href="/about" target="_blank">小奇</a>
                     !
                 </span>
             </div>
@@ -1052,7 +950,7 @@ Docker也不关心你要把容器运到何方：我们可以在自己的笔记�
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            小奇
                             
                         </span>
                     </div>
@@ -1100,7 +998,7 @@ Docker也不关心你要把容器运到何方：我们可以在自己的笔记�
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            小奇
                             
                         </span>
                     </div>
@@ -1303,7 +1201,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2019</span>
-            <a href="/about" target="_blank">John Doe</a>
+            <a href="/about" target="_blank">小奇</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
@@ -1336,7 +1234,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+    <a href="mailto:1781373476@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
         <i class="fas fa-envelope-open"></i>
     </a>
 
@@ -1345,10 +1243,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
 
 
 
