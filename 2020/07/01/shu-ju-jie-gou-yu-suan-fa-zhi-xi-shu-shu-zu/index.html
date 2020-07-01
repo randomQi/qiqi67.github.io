@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Docker(二)之搭建redis分布式集群, 小奇的Blogs">
+    <meta name="keywords" content="数据结构与算法之稀疏数组, 小奇的Blogs">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Docker(二)之搭建redis分布式集群 | 小奇的Blogs</title>
+    <title>数据结构与算法之稀疏数组 | 小奇的Blogs</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,12 +308,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Docker(二)之搭建redis分布式集群</h1>
+                    <h1 class="description center-align post-title">数据结构与算法之稀疏数组</h1>
                 </div>
             </div>
         </div>
@@ -335,12 +335,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Docker/">
-                                <span class="chip bg-color">Docker</span>
-                            </a>
-                        
-                            <a href="/tags/Redis/">
-                                <span class="chip bg-color">Redis</span>
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
                             </a>
                         
                     </div>
@@ -351,8 +347,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Docker/" class="post-category">
-                                Docker
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                数据结构与算法
                             </a>
                         
                     </div>
@@ -364,7 +360,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-30
+                    2020-07-01
                 </div>
                 
 
@@ -380,305 +376,96 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
-<li>宿主机：<code>Ubuntu-14.04_X64</code>-或者16.04</li>
-<li>Docker：<code>1.12.6</code>或者更高版本</li>
-</ul>
-<a id="more"></a>
+                <h2 id="数据结构与算法之稀疏数组"><a href="#数据结构与算法之稀疏数组" class="headerlink" title="数据结构与算法之稀疏数组"></a>数据结构与算法之稀疏数组</h2><p>简介</p>
+<p>记录数组一共有几行几列，有多少个不同的值 把具有不同值的元素的行列及值记录在一个小规模的数组中，从而缩小程序的规模</p>
+<p><img src="https://img-blog.csdnimg.cn/20200701223813897.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3F3cXdlMTIzNDU2Nw==,size_16,color_FFFFFF,t_70" alt="稀疏数组原理"></p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre class=" language-java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SparseArray</span> <span class="token punctuation">{</span>
 
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><ul>
-<li>我们将搭建一个包含<code>6</code>个节点的<code>Docker</code>应用栈，其中包括一个负载均衡代理节点、两个<code>Web</code>应用节点、一个主数据库节点及两个从数据库节点。</li>
-</ul>
-<p>会用到数据卷的知识</p>
-<ul>
-<li>获取镜像：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 获取Django镜像</span>
-$ docker pull django
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 创建一个原始的二维数组 11 * 11</span>
+        <span class="token keyword">int</span> chessArr1<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">11</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        chessArr1<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        chessArr1<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        chessArr1<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 输出原始的二维数组</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"原始的二维数组~~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> row <span class="token operator">:</span> chessArr1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> data <span class="token operator">:</span> row<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-<span class="token comment" spellcheck="true"># 获取HAProxy镜像</span>
-$ docker pull haproxy
+        <span class="token comment" spellcheck="true">// 将二维数组 转 稀疏数组的思</span>
+        <span class="token comment" spellcheck="true">// 1. 先遍历二维数组 得到非0数据的个数</span>
+        <span class="token keyword">int</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">11</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">11</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>chessArr1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    sum<span class="token operator">++</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-<span class="token comment" spellcheck="true"># 获取Redis镜像</span>
-$ docker pull redis
+        <span class="token comment" spellcheck="true">// 2. 创建对应的稀疏数组</span>
+        <span class="token keyword">int</span> sparseArr<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>sum <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 给稀疏数组赋值</span>
+        sparseArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">;</span>
+        sparseArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">;</span>
+        sparseArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> sum<span class="token punctuation">;</span>
 
-<span class="token comment" spellcheck="true"># 查看本地镜像列表</span>
-$ docker images</code></pre>
-<ul>
-<li>应用容器节点间的互联，由于我们使用的为同一台宿主机，若为真正的分布式架构集群，还应处理容器的跨主机通信问题，在使用<code>run</code>命令创建容器时，添加<code>--link</code>选项，通过容器名，进行容器间安全的交互通信；</li>
-<li>容器启动顺序：<ol>
-<li>启动<code>1</code>个<code>redis-master</code>容器节点；</li>
-<li>启动<code>2</code>个<code>redis-slave</code>容器节点并连接<code>redis-master</code>节点；</li>
-<li>启动<code>2</code>个<code>Web APP</code>容器节点并连接<code>redis-master</code>节点；</li>
-<li>启动<code>1</code>个<code>HAProxy</code>容器节点并连接2个<code>Web APP</code>节点；</li>
-</ol>
-</li>
-</ul>
-<h2 id="搭建指导"><a href="#搭建指导" class="headerlink" title="搭建指导"></a>搭建指导</h2><h3 id="启动各节点并互连"><a href="#启动各节点并互连" class="headerlink" title="启动各节点并互连"></a>启动各节点并互连</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 请总共打开宿主机的7个终端, 每个终端连接一个容器</span>
-<span class="token comment" spellcheck="true"># 启动redis数据库节点</span>
-$ docker run -it --name redis-master redis /bin/bash
-$ docker run -it --name redis-slave1 --link redis-master:master redis /bin/bash
-$ docker run -it --name redis-slave2 --link redis-master:master redis /bin/bash
+        <span class="token comment" spellcheck="true">// 遍历二维数组，将非0的值存放到 sparseArr中</span>
+        <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//count 用于记录是第几个非0数据</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">11</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">11</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>chessArr1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    count<span class="token operator">++</span><span class="token punctuation">;</span>
+                    sparseArr<span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+                    sparseArr<span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> j<span class="token punctuation">;</span>
+                    sparseArr<span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> chessArr1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-<span class="token comment" spellcheck="true"># 启动APP节点</span>
-$ docker run -it -h<span class="token operator">=</span><span class="token string">"APP1"</span> --name APP1 --link redis-master:db -v ~/Projects/Django/App1:/usr/src/app django /bin/bash
-$ docker run -it -h<span class="token operator">=</span><span class="token string">"APP2"</span> --name APP2 --link redis-master:db -v ~/Projects/Django/App2:/usr/src/app django /bin/bash
+        <span class="token comment" spellcheck="true">// 输出稀疏数组的形式</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"得到稀疏数组为~~~~"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> sparseArr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t%d\t%d\t\n"</span><span class="token punctuation">,</span> sparseArr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> sparseArr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> sparseArr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token comment" spellcheck="true"># 启动HAProxy节点</span>
-$ docker run -it -h<span class="token operator">=</span><span class="token string">"HaProxy"</span> --name HAProxy --link APP1:APP1 --link APP2:APP2 -p 6301:6301 -v ~/Project/HAProxy:/tmp haproxy /bin/bash
+        <span class="token comment" spellcheck="true">//将稀疏数组 --》 恢复成 原始的二维数组</span>
+        <span class="token comment" spellcheck="true">/*
+         *  1. 先读取稀疏数组的第一行，根据第一行的数据，创建原始的二维数组，比如上面的  chessArr2 = int [11][11]
+            2. 在读取稀疏数组后几行的数据，并赋给 原始的二维数组 即可.
+         */</span>
 
-<span class="token comment" spellcheck="true"># 查看运行中的容器</span>
-$ docker <span class="token function">ps</span></code></pre>
-<h3 id="配置redis数据库，在宿主机上创建redis数据库的配置文件随后copy到redis容器中"><a href="#配置redis数据库，在宿主机上创建redis数据库的配置文件随后copy到redis容器中" class="headerlink" title="配置redis数据库，在宿主机上创建redis数据库的配置文件随后copy到redis容器中"></a>配置<code>redis</code>数据库，在宿主机上创建<code>redis</code>数据库的配置文件随后copy到redis容器中</h3><ul>
-<li><code>redis-master</code>配置文件：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ vim redis-master.conf</code></pre>
-<pre class=" language-text"><code class="language-text">daemonize yes
-pidfile /var/run/redis.pid
-port 6379
-timeout 0
-tcp-keepalive 0
-databases 1
+        <span class="token comment" spellcheck="true">//1. 先读取稀疏数组的第一行，根据第一行的数据，创建原始的二维数组</span>
 
-stop-writes-on-bgsave-error no
-rdbcompression yes
-rdbchecksum yes
-dbfilename dump.rdb
-dir /tmp/
+        <span class="token keyword">int</span> chessArr2<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>sparseArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span>sparseArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-maxmemory 2gb
-maxmemory-policy allkeys-lru
-appendonly no
-appendfsync everysec
-no-appendfsync-on-rewrite no
-auto-aof-rewrite-percentage 100
-auto-aof-rewrite-min-size 512mb
-hash-max-ziplist-entries 64
-hash-max-ziplist-value 128
-list-max-ziplist-entries 64
-list-max-ziplist-value 128
-set-max-intset-entries 64
-zset-max-ziplist-entries 64
-zset-max-ziplist-value 128
-activerehashing yes</code></pre>
-<ul>
-<li><code>redis-slave</code>配置文件： /home/lq/</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ vim redis-slave.conf</code></pre>
-<pre class=" language-text"><code class="language-text">daemonize yes
-pidfile /var/run/redis.pid
-port 6379
-slaveof master 6379
-timeout 0
-tcp-keepalive 0
-databases 1
+        <span class="token comment" spellcheck="true">//2. 在读取稀疏数组后几行的数据(从第二行开始)，并赋给 原始的二维数组 即可</span>
 
-stop-writes-on-bgsave-error no
-rdbcompression yes
-rdbchecksum yes
-dbfilename dump.rdb
-dir /tmp/
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> sparseArr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            chessArr2<span class="token punctuation">[</span>sparseArr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span>sparseArr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> sparseArr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-maxmemory 2gb
-maxmemory-policy allkeys-lru
-appendonly no
-appendfsync everysec
-no-appendfsync-on-rewrite no
-auto-aof-rewrite-percentage 100
-auto-aof-rewrite-min-size 512mb
-hash-max-ziplist-entries 64
-hash-max-ziplist-value 128
-list-max-ziplist-entries 64
-list-max-ziplist-value 128
-set-max-intset-entries 64
-zset-max-ziplist-entries 64
-zset-max-ziplist-value 128
-activerehashing yes</code></pre>
-<ul>
-<li>配置<code>redis</code>数据库：<br>方法一：将本地redis配置文件复制到容器中的方法：利用数据卷方式</li>
-</ul>
-<pre class=" language-text"><code class="language-text"># 适用于1.12版本及以上
-## 获取数据卷的挂载点
-$ docker inspect -f '{{ .Mounts }}' redis-master
-$ docker inspect -f '{{ .Mounts }}' redis-slave1
-$ docker inspect -f '{{ .Mounts }}' redis-slave2
+        <span class="token comment" spellcheck="true">// 输出恢复后的二维数组</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"恢复后的二维数组"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-## 分别记录挂载点 cd /var/lib/docker/volumes/0726b88309db1be325c3c0afc8aa68b8545b96cbab2f16e8136c1e63694d13e9/_data
-## 形如：/var/lib/docker/volumes/<Container-ID>/_data
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> row <span class="token operator">:</span> chessArr2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> data <span class="token operator">:</span> row<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-## 拷贝配置文件  cp /home/lq/redis-slave.conf .
-$ cp redis-master.conf <redis-master的挂载点>
-$ cp redis-slave.conf <redis-slave1的挂载点>
-$ cp redis-slave.conf <redis-slave2的挂载点></code></pre>
-<ul>
-<li>测试操作：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 在redis-master容器中</span>
-<span class="token comment" spellcheck="true"># 在redis-master容器中</span>
-$ <span class="token function">cp</span> /data/redis-master.conf /usr/local/bin/redis.conf
-$ <span class="token function">cd</span> /usr/local/bin/
-$ redis-server redis.conf
-$ redis-cli
-127.0.0.1:6379<span class="token operator">></span> <span class="token keyword">set</span> stu_num 11234567
-127.0.0.1:6379<span class="token operator">></span> get stu_num
-127.0.0.1:6379<span class="token operator">></span> <span class="token keyword">exit</span>
-
-<span class="token comment" spellcheck="true"># 在redis-slave容器中</span>
-<span class="token comment" spellcheck="true"># 在redis-slave容器中</span>
-$ <span class="token function">cp</span> /data/redis-slave.conf /usr/local/bin/redis.conf
-$ <span class="token function">cd</span> /usr/local/bin/
-$ redis-server redis.conf
-$ redis-cli
-127.0.0.1:6379<span class="token operator">></span> get stu_num
-127.0.0.1:6379<span class="token operator">></span> <span class="token keyword">exit</span></code></pre>
-<h3 id="配置Web-APP节点"><a href="#配置Web-APP节点" class="headerlink" title="配置Web APP节点"></a>配置Web APP节点</h3><h4 id="在Web-APP节点上"><a href="#在Web-APP节点上" class="headerlink" title="在Web APP节点上"></a>在Web APP节点上</h4><ul>
-<li><p>安装<code>redis</code>模块：<br>可能会更新安装 pip install –upgrade pip</p>
-<pre class=" language-bash"><code class="language-bash">$ pip <span class="token function">install</span> redis</code></pre>
-</li>
-<li><p>测试操作：</p>
-</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ python</code></pre>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> redis
-<span class="token keyword">print</span><span class="token punctuation">(</span>redis<span class="token punctuation">.</span>__file__<span class="token punctuation">)</span>
-exit<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
-<ul>
-<li>创建<code>Hello-World</code>的<code>APP</code>：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> /usr/src/app
-$ <span class="token function">mkdir</span> dockerweb
-$ <span class="token function">cd</span> dockerweb
-$ django-admin.py startproject redisweb
-$ <span class="token function">cd</span> redisweb
-$ python manage.py startapp helloworld</code></pre>
-<h4 id="在宿主机上"><a href="#在宿主机上" class="headerlink" title="在宿主机上"></a>在宿主机上</h4><ul>
-<li>切换目录：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> ~/Projects/Django/App1/dockerweb/redisweb/
-$ <span class="token function">cd</span> ~/Projects/Django/App2/dockerweb/redisweb/</code></pre>
-<ul>
-<li>配置视图(<code>View</code>)：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ vim helloworld/views.py</code></pre>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>shortcuts <span class="token keyword">import</span> render
-<span class="token keyword">from</span> django<span class="token punctuation">.</span>http <span class="token keyword">import</span> HttpResponse
-<span class="token keyword">import</span> redis
-
-
-<span class="token keyword">def</span> <span class="token function">hello</span><span class="token punctuation">(</span>requset<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    str<span class="token operator">=</span>redis<span class="token punctuation">.</span>__file__
-    str<span class="token operator">+=</span><span class="token string">"&lt;br>"</span>
-    r <span class="token operator">=</span> redis<span class="token punctuation">.</span>Redis<span class="token punctuation">(</span>host<span class="token operator">=</span><span class="token string">'db'</span><span class="token punctuation">,</span> port<span class="token operator">=</span><span class="token number">6379</span><span class="token punctuation">,</span> db<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
-    info <span class="token operator">=</span> r<span class="token punctuation">.</span>info<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    str<span class="token operator">+=</span><span class="token punctuation">(</span><span class="token string">"Set Hi &lt;br>"</span><span class="token punctuation">)</span>
-    r<span class="token punctuation">.</span>set<span class="token punctuation">(</span><span class="token string">'Hi'</span><span class="token punctuation">,</span> <span class="token string">'HelloWorld-APP1'</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># 在APP2节点修改为HelloWorld-APP2</span>
-    str<span class="token operator">+=</span><span class="token punctuation">(</span><span class="token string">"Get Hi: %s &lt;br>"</span> <span class="token operator">%</span> r<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">'Hi'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    str<span class="token operator">+=</span><span class="token punctuation">(</span><span class="token string">"Redis Info: &lt;br>"</span><span class="token punctuation">)</span>
-    str<span class="token operator">+=</span><span class="token punctuation">(</span><span class="token string">"Key: Info Value"</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> key <span class="token keyword">in</span> info<span class="token punctuation">:</span>
-        str<span class="token operator">+=</span><span class="token punctuation">(</span><span class="token string">"%s: %s&lt;br>"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>key<span class="token punctuation">,</span> info<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> HttpResponse<span class="token punctuation">(</span>str<span class="token punctuation">)</span></code></pre>
-<ul>
-<li>更改配置文件：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ vim redisweb/settings.py</code></pre>
-<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># 文件内容</span>
-ALLOWED_HOSTS <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'*'</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
-INSTALLED_APPS <span class="token operator">=</span> <span class="token punctuation">[</span>
-    <span class="token string">'django.contrib.admin'</span><span class="token punctuation">,</span>
-    <span class="token string">'django.contrib.auth'</span><span class="token punctuation">,</span>
-    <span class="token string">'django.contrib.contenttypes'</span><span class="token punctuation">,</span>
-    <span class="token string">'django.contrib.sessions'</span><span class="token punctuation">,</span>
-    <span class="token string">'django.contrib.messages'</span><span class="token punctuation">,</span>
-    <span class="token string">'django.contrib.staticfiles'</span><span class="token punctuation">,</span>
-    <span class="token string">'helloworld'</span><span class="token punctuation">,</span>
-<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
 </code></pre>
-<ul>
-<li>配置<code>url</code>：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ vim redisweb/urls.py</code></pre>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> django<span class="token punctuation">.</span>conf<span class="token punctuation">.</span>urls <span class="token keyword">import</span> url
-<span class="token keyword">from</span> django<span class="token punctuation">.</span>contrib <span class="token keyword">import</span> admin
-admin<span class="token punctuation">.</span>autodiscover<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">from</span> helloworld<span class="token punctuation">.</span>views <span class="token keyword">import</span> hello
-
-urlpatterns <span class="token operator">=</span> <span class="token punctuation">[</span> 
-   url<span class="token punctuation">(</span>r<span class="token string">'^admin/'</span><span class="token punctuation">,</span> admin<span class="token punctuation">.</span>site<span class="token punctuation">.</span>urls<span class="token punctuation">)</span><span class="token punctuation">,</span>
-   url<span class="token punctuation">(</span>r<span class="token string">'^helloworld$'</span><span class="token punctuation">,</span> hello<span class="token punctuation">)</span><span class="token punctuation">,</span>
-<span class="token punctuation">]</span></code></pre>
-<h4 id="在Web-APP节点上-两个分别都要"><a href="#在Web-APP节点上-两个分别都要" class="headerlink" title="在Web APP节点上  两个分别都要"></a>在<code>Web APP</code>节点上  两个分别都要</h4><ul>
-<li>初始化项目：root@1b787e4ab53b:/usr/src/app/dockerweb/redisweb# </li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ python manage.py makemigrations
-$ python manage.py migrate</code></pre>
-<ul>
-<li>启动服务：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># APP1:</span>
-$ python manage.py runserver 0.0.0.0:8001
-
-<span class="token comment" spellcheck="true"># APP2:</span>
-$ python manage.py runserver 0.0.0.0:8002</code></pre>
-<h3 id="配置HAProxy节点"><a href="#配置HAProxy节点" class="headerlink" title="配置HAProxy节点"></a>配置<code>HAProxy</code>节点</h3><h4 id="在宿主机上-1"><a href="#在宿主机上-1" class="headerlink" title="在宿主机上"></a>在宿主机上</h4><ul>
-<li>切换目录：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> ~/Projects/HAProxy/</code></pre>
-<ul>
-<li>创建配置文件：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ vim haproxy.cfg</code></pre>
-<pre class=" language-text"><code class="language-text">global
-    log 127.0.0.1   local0
-    maxconn 4096
-    chroot /usr/local/sbin
-    daemon
-    nbproc  4
-    pidfile /usr/local/sbin/haproxy.pid
-
-defaults
-    log     127.0.0.1   local3
-    mode    http
-    option  dontlognull
-    option  redispatch
-    retries 2
-    maxconn 2000
-    balance roundrobin 
-    timeout connect 5000ms
-    timeout client  50000ms
-    timeout server  50000ms
-
-listen redis_proxy
-    bind 0.0.0.0:6301
-    stats enable
-    bind-process 1
-    stats uri /haproxy-stats
-    stats auth phil:NRG93012
-        server APP1 APP1:8001 check inter 2000 rise 2 fall 5
-        server APP2 APP2:8002 check inter 2000 rise 2 fall 5</code></pre>
-<h4 id="在HAProxy节点"><a href="#在HAProxy节点" class="headerlink" title="在HAProxy节点"></a>在<code>HAProxy</code>节点</h4><ul>
-<li>切换目录：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> /tmp</code></pre>
-<ul>
-<li>复制配置文件：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cp</span> haproxy.cfg /usr/local/sbin
-</code></pre>
-<ul>
-<li>切换目录：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> /usr/local/sbin</code></pre>
-<ul>
-<li>启动服务：</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ haproxy -f haproxy.cfg</code></pre>
-<h3 id="测试操作"><a href="#测试操作" class="headerlink" title="测试操作"></a>测试操作</h3><ul>
-<li>使用浏览器访问，<code>http://&lt;宿主机的IP地址&gt;:&lt;6301&gt;/helloworld</code></li>
-<li>多次请求代理节点，<code>HAProxy</code>节点会自动分发请求，达到负载均衡的目的；</li>
-</ul>
-<hr>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -722,7 +509,7 @@ listen redis_proxy
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://qiqi67.github.io/2020/06/30/docker-er-zhi-da-jian-redis-fen-bu-shi-ji-qun/">https://qiqi67.github.io/2020/06/30/docker-er-zhi-da-jian-redis-fen-bu-shi-ji-qun/</a>
+                    <a href="https://qiqi67.github.io/2020/07/01/shu-ju-jie-gou-yu-suan-fa-zhi-xi-shu-shu-zu/">https://qiqi67.github.io/2020/07/01/shu-ju-jie-gou-yu-suan-fa-zhi-xi-shu-shu-zu/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -760,12 +547,8 @@ listen redis_proxy
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Docker/">
-                                    <span class="chip bg-color">Docker</span>
-                                </a>
-                            
-                                <a href="/tags/Redis/">
-                                    <span class="chip bg-color">Redis</span>
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
                                 </a>
                             
                         </div>
@@ -933,9 +716,10 @@ listen redis_proxy
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/07/01/shu-ju-jie-gou-yu-suan-fa-zhi-xi-shu-shu-zu/">
                     <div class="card-image">
@@ -953,9 +737,9 @@ listen redis_proxy
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-07-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-07-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -968,6 +752,7 @@ listen redis_proxy
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -986,27 +771,19 @@ listen redis_proxy
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/06/30/docker-yi-zhi-an-zhuang-docker/">
+                <a href="/2020/06/30/docker-er-zhi-da-jian-redis-fen-bu-shi-ji-qun/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Docker(一)之安装Docker">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Docker(二)之搭建redis分布式集群">
                         
-                        <span class="card-title">Docker(一)之安装Docker</span>
+                        <span class="card-title">Docker(二)之搭建redis分布式集群</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            简介
-在Linux上安装Docker并配置加速器，Docker目前被分为两个版本：
-Community-Edition：社区版；
-Enterprise-Edition：企业版；
-
-
-
-操作系统
-Ubuntu-14.04_x64(LTS)：T
+                            基于Docker搭建redisf分布式集群
                         
                     </div>
                     <div class="publish-info">
@@ -1015,11 +792,27 @@ Ubuntu-14.04_x64(LTS)：T
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            小奇
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docker/" class="post-category">
+                                    Docker
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Docker/">
+                        <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
                 </div>
                 
             </div>
